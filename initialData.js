@@ -1,3 +1,16 @@
+/**
+ * @typedef {Object} Task
+ * @property {number} id - Unique identifier for the task.
+ * @property {string} title - Title of the task.
+ * @property {string} description - Description of the task.
+ * @property {'todo' | 'doing' | 'done'} status - Status of the task.
+ */
+
+/**
+ * Initial set of tasks used as a fallback or for the first load.
+ * @type {Task[]}
+ */
+
 export const initialTasks = [
   {
     id: 1,
@@ -40,3 +53,5 @@ export const initialTasks = [
     status: "done",
   },
 ];
+// Make initialTasks globally available for scripts.js to use
+window.KanbanInitialTasks = initialTasks;
