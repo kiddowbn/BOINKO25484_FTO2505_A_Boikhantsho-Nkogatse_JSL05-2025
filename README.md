@@ -42,3 +42,36 @@ In this project, you will implement a task management system where **tasks are p
 ## Expected Outcome
 
 A fully functional task management system where tasks are dynamically loaded from **local storage**, tasks can be **added through a modal**, and the application **remains consistent** after refreshing the page. The code will be modular, well-documented, and easy to maintain, following best practices for JavaScript development.
+
+
+
+Added the "Add Task" button to the header.
+Added the HTML structure for the "Add Task" and "Edit Task" modals.
+Added the dark mode switch toggle inside the sidebar.
+
+
+
+
+Adding Tasks: 
+ Click "+ Add New Task".
+ The "Add Task" modal (with the red close button) opens.
+ Fill the form and click "Create Task".
+ The new task is added, saved to localStorage, and the board re-renders.
+
+Editing Tasks:  Click on any task. 
+ The "Edit Task" modal (with the gray close button) opens, pre-filled with the task's details.
+ Modify the title, description, or status. 
+ Click "Save Changes". 
+ The task is updated, saved to localStorage, and the board re-renders. 
+ 
+ 
+ 
+The page will load tasks dynamically from either localStorage (if data exists) or from InitialData.js.
+Tasks will be displayed in the correct columns ("TODO", "DOING", "DONE").
+The task counts in the column headers will update.
+Clicking the "+ Add New Task" button will open the modal.
+You can fill the form in the modal and click "Create Task" to add a new task. The task will appear on the board and be saved to localStorage.
+Refreshing the page will load the tasks from localStorage.
+Clicking the "Toggle Theme" button will switch between light and dark modes (basic implementation).
+Clicking on a task will show an alert with its details (placeholder for future modal).
+
