@@ -11,8 +11,10 @@
   --secondary-font-color: #828fa3;
   --primary-box-shadow: 0px 4px 6px rgba(54, 78, 126, 0.1015);
   --sidebar-width: 300px;
-  --modal-bg: #ffffff;
-  --border-color: #e4ebfa;
+  /* Added color variables for close buttons */
+  --close-red: #ea5555;
+  --close-gray: #828fa3; /* Not used anymore, but kept for potential future use */
+  --modal-bg: var(--primary-color);
 }
 /* Dark Mode Variables */
 [data-theme="dark"] {
@@ -22,6 +24,9 @@
   --secondary-font-color: #828fa3;
   --modal-bg: #2b2c37;
   --border-color: #33344a;
+  /* Update close button colors for dark mode if needed */
+  --close-red: #ea5555; /* Red often stays the same */
+  --close-gray: #828fa3;
 }
 
 /* ================
@@ -37,7 +42,7 @@ body {
   background-color: var(--secondary-color);
   color: var(--primary-font-color);
   font-size: 1rem;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
 }
 
 /* ================
@@ -47,14 +52,10 @@ body {
   display: flex;
   flex-direction: column;
   background-color: var(--primary-color);
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid #e4ebfa;
   width: var(--sidebar-width);
   height: 100vh;
-  padding: 33px 0 30px 0;
-  transition: transform 0.3s ease-in-out;
-}
-.side-bar.hidden {
-  transform: translateX(-100%);
+  padding: 33px 0 30px 0; /* Add padding for top and bottom */
 }
 #side-logo-div {
   margin: 0 113px 54px 34px;
@@ -68,7 +69,7 @@ body {
   display: flex;
   flex-direction: column;
   color: var(--primary-font-color);
-  flex-grow: 1;
+  flex-grow: 1; /* Allow it to grow and push theme toggle to bottom */
 }
 #headline-sidepanel {
   padding: 0 12px 0 50px;
@@ -85,22 +86,77 @@ body {
   border-radius: 0 100px 100px 0;
   height: 48px;
   width: 276px;
-  padding: 15px 12px 15px 50px;
+  padding: 15px 12px 15px 50px; /* Adjusted padding */
   font-size: 0.9375rem;
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 10px;
+  overflow: hidden;
 }
-.theme-toggle {
-  align-self: center;
-  margin-top: auto;
-  margin-bottom: 30px;
-  padding: 10px 20px;
-  background-color: var(--secondary-color);
-  color: var(--primary-font-color);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
+
+/* ===============
+   Theme Toggle Switch
+================ */
+.theme-toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 0;
+  margin-top: auto; /* Push to the bottom */
+}
+
+.theme-label {
+  font-size: 0.8rem;
+  color: var(--secondary-font-color);
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
   cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #635fc7;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
 }
 
 /* ===============
@@ -122,7 +178,7 @@ header {
   color: var(--primary-font-color);
   height: 96px;
   padding: 0 35px 0 30px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #e4ebfa;
   width: 100%;
   font-size: 1.875rem;
   font-weight: 600;
@@ -137,7 +193,7 @@ header {
 .header-controls {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 15px; /* Add space between button and potential other controls */
 }
 #add-task-btn {
   padding: 12px 18px;
@@ -147,14 +203,6 @@ header {
   border-radius: 20px;
   font-weight: bold;
   cursor: pointer;
-}
-.sidebar-toggle-mobile {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--primary-font-color);
 }
 /* ===============
    Board Columns
@@ -227,7 +275,7 @@ header {
 }
 
 /* ===============
-   Modal Styles
+   Modal Styles (Add/Edit)
 ================ */
 .modal {
   display: none;
@@ -251,7 +299,7 @@ header {
   color: var(--primary-font-color);
   margin: auto;
   padding: 30px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #e4ebfa; /* Consider using var(--border-color) if defined in dark mode */
   border-radius: 8px;
   width: 90%;
   max-width: 500px;
@@ -261,20 +309,30 @@ header {
 .modal-content h2 {
     margin-top: 0;
 }
+/* Base close button style */
 .close {
-  color: var(--secondary-font-color);
-  float: right;
   font-size: 28px;
   font-weight: bold;
   position: absolute;
   top: 15px;
-  right: 20px;
   cursor: pointer;
 }
+/* Specific close button colors */
+.close-red {
+  color: var(--close-red);
+  right: 20px;
+}
+/* If you ever need a gray one again, you can use this */
+.close-gray {
+  color: var(--close-gray);
+  right: 50px;
+}
+
 .close:hover,
 .close:focus {
-  color: var(--primary-font-color);
+  opacity: 0.7;
 }
+
 .modal-content label {
     display: block;
     margin-top: 15px;
@@ -287,11 +345,17 @@ header {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid var(--border-color);
+    border: 1px solid #e4ebfa;
     border-radius: 4px;
-    background-color: var(--primary-color);
+    background-color: var(--modal-bg); /* Use modal background */
     color: var(--primary-font-color);
     font-family: inherit;
+    /* Ensure input text is visible in dark mode */
+    border-color: var(--secondary-font-color); /* Use a contrasting border */
+}
+.modal-content input::placeholder,
+.modal-content textarea::placeholder {
+    color: var(--secondary-font-color);
 }
 .modal-content button {
     width: 100%;
@@ -326,12 +390,7 @@ h4 {
 ======================== */
 @media screen and (max-width: 1023px) {
   .side-bar {
-    position: fixed;
-    z-index: 999;
-    transform: translateX(-100%);
-  }
-  .side-bar.show {
-    transform: translateX(0);
+    display: none; /* Or implement a mobile-friendly sidebar toggle */
   }
   #side-logo-div { display: none; }
   .logo-mobile { display: block; width: 30px; height: 30px; margin-right: 10px; }
@@ -346,12 +405,37 @@ h4 {
   .dot { height: 8px; width: 8px; }
   .column-head-div { gap: 8px; }
   .column-div { width: 100%; }
-  .sidebar-toggle-mobile { display: block; }
-  .theme-toggle { display: none; }
+  /* Hide theme toggle in sidebar on mobile if it's moved elsewhere */
+  .theme-toggle-container { display: none; }
+  /* Adjust modal content padding for smaller screens */
+  .modal-content {
+    padding: 20px;
+    width: 95%;
+  }
+  /* Adjust close button positions for mobile */
+  .close-red {
+    right: 15px;
+    top: 15px;
+  }
+  .close-gray {
+    right: 45px; /* Adjust spacing */
+    top: 15px;
+  }
 }
 
 @media screen and (max-width: 576px) {
   .card-column-main { grid-template-columns: minmax(0, 380px); }
   .column-div { padding: 24px; }
-  .modal-content { padding: 20px; width: 95%; }
+  /* Further adjust modal content */
+  .modal-content {
+    padding: 15px;
+  }
+   .close-red {
+    right: 10px;
+    top: 10px;
+  }
+  .close-gray {
+    right: 40px;
+    top: 10px;
+  }
 }

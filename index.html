@@ -18,7 +18,7 @@
   </head>
   <body>
     <!-- Navigation Sidebar -->
-    <nav class="side-bar" id="side-bar">
+    <nav class="side-bar" id="side-bar-div">
       <div id="side-logo-div">
         <img id="logo" src="./assets/logo-light.svg" alt="logo-light" />
       </div>
@@ -26,8 +26,15 @@
         <h4 id="headline-sidepanel">ALL BOARDS (1)</h4>
         <button class="board-btn">Launch Career</button>
       </div>
-      <!-- Theme Toggle Button -->
-      <button id="theme-toggle" class="theme-toggle">Toggle Theme</button>
+      <!-- Dark Mode Toggle Switch -->
+      <div class="theme-toggle-container">
+        <span class="theme-label">Light</span>
+        <label class="switch">
+          <input type="checkbox" id="theme-toggle-checkbox">
+          <span class="slider round"></span>
+        </label>
+        <span class="theme-label">Dark</span>
+      </div>
     </nav>
 
     <!-- Main Layout -->
@@ -44,13 +51,13 @@
           </h2>
         </div>
         <div class="header-controls">
+          <!-- Add Task Button -->
           <button id="add-task-btn">+ Add New Task</button>
-          <button id="sidebar-toggle" class="sidebar-toggle-mobile">☰</button>
         </div>
       </header>
       <div class="container">
         <main class="card-column-main">
-          <!-- Task Columns -->
+          <!-- Task Columns (Dynamically populated now) -->
           <div class="column-div" data-status="todo">
             <div id="todo-head-div" class="column-head-div">
               <span class="dot" id="todo-dot"></span>
@@ -58,7 +65,6 @@
             </div>
             <div class="tasks-container" id="todo-tasks"></div>
           </div>
-          
           <div class="column-div" data-status="doing">
             <div id="doing-head-div" class="column-head-div">
               <span class="dot" id="doing-dot"></span>
@@ -66,7 +72,6 @@
             </div>
             <div class="tasks-container" id="doing-tasks"></div>
           </div>
-          
           <div class="column-div" data-status="done">
             <div id="done-head-div" class="column-head-div">
               <span class="dot" id="done-dot"></span>
@@ -80,29 +85,46 @@
 
     <!-- Add Task Modal -->
     <div id="add-task-modal" class="modal hidden">
-        <div class="modal-content">
-          <span id="close-add-modal-btn" class="close">&times;</span>
-          <h2>Add New Task</h2>
-          <label for="add-task-title">Title</label>
-          <input type="text" id="add-task-title" placeholder="e.g. Take a walk">
-          
-          <label for="add-task-description">Description</label>
-          <textarea id="add-task-description" placeholder="e.g. It's good for health"></textarea>
-          
-          <label for="add-task-status">Status</label>
-          <select id="add-task-status">
-            <option value="todo">To Do</option>
-            <option value="doing">Doing</option>
-            <option value="done">Done</option>
-          </select>
-    
-          <button id="create-task-btn">Create Task</button>
-        </div>
+      <div class="modal-content">
+        <span id="close-add-modal-btn" class="close close-red">&times;</span>
+        <h2>Add New Task</h2>
+        <label for="add-task-title">Title</label>
+        <input type="text" id="add-task-title" placeholder="e.g. Take a walk">
+        <label for="add-task-description">Description</label>
+        <textarea id="add-task-description" placeholder="e.g. It's good for health"></textarea>
+        <label for="add-task-status">Status</label>
+        <select id="add-task-status">
+          <option value="todo">To Do</option>
+          <option value="doing">Doing</option>
+          <option value="done">Done</option>
+        </select>
+        <button id="create-task-btn">Create Task</button>
       </div>
+    </div>
 
-    <!-- Include Initial Data FIRST -->
-    <script src="./initialData.js"></script>
-    <!-- Include main application logic SECOND -->
-    <script src="./scripts.js"></script>
+    <!-- Edit Task Modal -->
+    <div id="edit-task-modal" class="modal hidden">
+      <div class="modal-content">
+        <span id="close-edit-modal-btn" class="close close-red">&times;</span> <!-- Changed to close-red -->
+        <h2>Edit Task</h2>
+        <input type="hidden" id="edit-task-id">
+        <label for="edit-task-title">Title</label>
+        <input type="text" id="edit-task-title">
+        <label for="edit-task-description">Description</label>
+        <textarea id="edit-task-description"></textarea>
+        <label for="edit-task-status">Status</label>
+        <select id="edit-task-status">
+          <option value="todo">To Do</option>
+          <option value="doing">Doing</option>
+          <option value="done">Done</option>
+        </select>
+        <button id="save-task-btn">Save Changes</button>
+      </div>
+    </div>
+
+    <!-- Include the single JavaScript file -->
+
+<script src="./initialData.js"></script>
   </body>
+
 </html>
